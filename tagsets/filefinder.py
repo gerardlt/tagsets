@@ -77,11 +77,10 @@ class FileMatcher(FileMatcherBase):
                 os.path.basename(path) not in self.ignoredirs)
 
     def interested_in_file(self, filename):
-        interested = False
+        interested, interestpattern = False, None
         for pattern in self.filepatterns:
             if fnmatch.fnmatch(filename, pattern):
-                interestpattern = pattern
-                interested = True
+                interested, interestpattern = True, pattern
         if interested:
             for pattern in self.ignorepatterns:
                 if fnmatch.fnmatch(filename, pattern):
