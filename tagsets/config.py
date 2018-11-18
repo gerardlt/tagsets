@@ -3,6 +3,8 @@ import os
 import pykwalify.core
 import yaml
 
+from abc import ABCMeta, abstractmethod
+
 import tagsets.filefinder
 
 from tagsets.tagsearch import TagFileMatcher, TagTextMatcher
@@ -12,13 +14,17 @@ logger = logging.getLogger(__name__)
 
 schema_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config-schema.yaml")
 
-class ConfBC:
+class ConfBC(metaclass=ABCMeta):
     def __repr__(self):
         return "<%s at %s>(%s)" % (
             self.__class__.__name__,
             hex(id(self)),
             self.repr_detail()
         )
+
+    @abstractmethod
+    def repr_detail(self):
+        pass
 
 class SearchConf(ConfBC):
     pass
